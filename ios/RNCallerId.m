@@ -28,10 +28,11 @@ RCT_EXPORT_MODULE()
     return error;
 }
 
-RCT_EXPORT_METHOD(setCallerList: (NSArray*) callerList withResolver: (RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+RCT_EXPORT_METHOD(setCallerList: (NSString*) callerList withResolver: (RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
     @try {
         NSUserDefaults* userDefaults = [[NSUserDefaults alloc] initWithSuiteName:DATA_GROUP];
         [userDefaults setObject:callerList forKey:DATA_KEY];
+        [userDefaults synchronize];
         [CXCallDirectoryManager.sharedInstance reloadExtensionWithIdentifier:EXTENSION_ID completionHandler:^(NSError * _Nullable error) {
             if(error) {
                 reject(@"setCallerList", @"CALLER_ID Failed to reload extension", error);

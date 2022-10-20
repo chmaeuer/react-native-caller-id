@@ -4,9 +4,9 @@ import {NativeModules, Platform} from 'react-native';
 
 const {RNCallerId: CallerId} = NativeModules;
 
-export const setCallerList = async (callerList) => {
+export const setCallerList = (callerList) => {
   try {
-    return await CallerId.setCallerList(callerList);
+    return CallerId.setCallerList(JSON.stringify(callerList));
   } catch (error) {
     throw error;
   }
