@@ -53,12 +53,10 @@ RCT_EXPORT_METHOD(getExtensionEnabledStatus: (RCTPromiseResolveBlock)resolve rej
             if (enabledStatus == 0) {
                 reject(@"getExtensionEnabledStatus", @"CALLER_ID Failed to get extension status", error);
                 // Code 0 tells you that there's an error. Common is that the identifierString is wrong.
-            } else if (enabledStatus == 1) {
-                resolve([NSNumber numberWithInt:enabledStatus]);
+            } else {
+                resolve(enabledStatus);
                 // Code 1 is deactivated extension
-            } else if (enabledStatus == 2) {
-                resolve([NSNumber numberWithInt:enabledStatus]);
-                // Code 1 is an activated extension
+                // Code 2 is activated extension
             }
         }];
         
