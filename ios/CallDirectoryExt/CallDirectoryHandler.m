@@ -9,7 +9,7 @@
 #import "CallDirectoryHandler.h"
 
 #define DATA_KEY @"CALLER_LIST"
-#define APP_GROUP @"group.com.propstack.contact"
+#define APP_GROUP @"group.de.propstack.crm"
 
 @interface Caller : NSObject
 @property NSString* name;

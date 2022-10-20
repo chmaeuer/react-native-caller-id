@@ -2,8 +2,8 @@
 #import "RNCallerId.h"
 
 #define DATA_KEY @"CALLER_LIST"
-#define DATA_GROUP @"group.com.propstack.contact"
-#define EXTENSION_ID @"com.propstack.contact.CallDirectoryExt"
+#define DATA_GROUP @"group.de.propstack.crm"
+#define EXTENSION_ID @"de.propstack.crm.CallDirectoryExt"
 
 @implementation RNCallerId
 - (dispatch_queue_t)methodQueue{
