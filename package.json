@@ -1,7 +1,7 @@
 {
   "name": "react-native-caller-id",
-  "version": "1.0.2",
-  "description": "Call Identification and Blocking module for React Native",
+  "version": "1.0.0",
+  "description": "Call Identification module for React Native",
   "main": "index.js",
   "scripts": {},
   "keywords": [
@@ -10,11 +10,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/crazycodeboy/react-native-splash-screen.git"
+    "url": "git+https://github.com/chmaeuer/react-native-caller-id.git"
   },
   "author": {
-    "name": "Hien Phung",
-    "email": "hienphungkhanh@gmail.com"
+    "name": "Christopher Mäuer",
+    "email": "christopher.maeuer@propstack.de"
   },
   "license": "MIT"
 }
