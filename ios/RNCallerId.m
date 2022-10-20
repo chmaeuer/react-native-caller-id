@@ -75,7 +75,7 @@ RCT_EXPORT_METHOD(openSettings: (RCTPromiseResolveBlock)resolve rejecter:(RCTPro
             resolve(@true);
         }
 
-    }]
+    }];
 
 }
 
