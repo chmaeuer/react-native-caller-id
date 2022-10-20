@@ -35,3 +35,13 @@ export const getExtensionEnabledStatus = async () => {
     throw error;
   }
 };
+export const openSettings = async () => {
+  try {
+    if (Platform.OS === 'ios') {
+        return await CallerId.openSettings();
+    }
+    return
+  } catch (error) {
+    throw error;
+  }
+};

@@ -48,9 +48,6 @@ RCT_EXPORT_METHOD(setCallerList: (NSString*) callerList withResolver: (RCTPromis
 }
 
 RCT_EXPORT_METHOD(getExtensionEnabledStatus: (RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
-    // The completionHandler is called twice. This is a workaround
-//    __block BOOL hasResult = false;
-//    __block int realResult = 0;
     
     [[CXCallDirectoryManager sharedInstance] getEnabledStatusForExtensionWithIdentifier:EXTENSION_ID completionHandler:^(CXCallDirectoryEnabledStatus enabledStatus, NSError * _Nullable error) {
             if (enabledStatus == 0) {
@@ -64,19 +61,22 @@ RCT_EXPORT_METHOD(getExtensionEnabledStatus: (RCTPromiseResolveBlock)resolve rej
                 // Code 1 is an activated extension
             }
         }];
-    
-//    [CXCallDirectoryManager.sharedInstance getEnabledStatusForExtensionWithIdentifier:EXTENSION_ID completionHandler:^(CXCallDirectoryEnabledStatus enabledStatus, NSError * _Nullable error) {
-//        // TODO: Remove these conditions when you find a way to return the correct result or Apple just fix their bug.
-//        if (hasResult == false) {
-//            hasResult = true;
-//            realResult = (int)enabledStatus;
-//        }
-//        if(error) {
-//            reject(@"getExtensionEnabledStatus", @"Failed to get extension status", error);
-//        } else {
-//            resolve([NSNumber numberWithInt:realResult]);
-//        }
-//    }];
+        
+}
+
+RCT_EXPORT_METHOD(openSettings: (RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+
+    [CXCallDirectoryManager.sharedInstance openSettingsWithCompletionHandler:^(NSError * _Nullable error) {
+            
+        if(error != nil) {
+            reject(@"openSettings", @"Opening settings failed", error);
+        }
+        else {
+            resolve(@true);
+        }
+
+    }]
+
 }
 
 - (NSDictionary *)constantsToExport
