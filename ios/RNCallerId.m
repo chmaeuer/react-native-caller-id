@@ -3,7 +3,7 @@
 
 #define DATA_KEY @"CALLER_LIST"
 #define DATA_GROUP @"group.com.propstack.contact"
-#define EXTENSION_ID @"com.propstack.contact.CallDirectoryExtension"
+#define EXTENSION_ID @"com.propstack.contact.CallDirectoryExt"
 
 @implementation RNCallerId
 - (dispatch_queue_t)methodQueue{
