@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.StringTokenizer;
-import com.reactlibrary.R;
+import de.propstack.callerid.R;
 import com.utils.Constants;
 
 import java.util.ArrayList;
