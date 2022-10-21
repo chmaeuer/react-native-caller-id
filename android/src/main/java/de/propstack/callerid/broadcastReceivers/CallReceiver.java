@@ -1,4 +1,4 @@
-package com.reactlibrary.broadcastReceivers;
+package de.propstack.callerid.broadcastReceivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

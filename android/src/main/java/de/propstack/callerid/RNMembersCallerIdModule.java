@@ -1,5 +1,5 @@
 
-package com.reactlibrary;
+package de.propstack.callerid;
 
 import android.content.Context;
 import android.content.Intent;

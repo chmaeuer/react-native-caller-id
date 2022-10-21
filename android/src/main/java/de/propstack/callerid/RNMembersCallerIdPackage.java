@@ -1,5 +1,5 @@
 
-package com.reactlibrary;
+package de.propstack.callerid;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
