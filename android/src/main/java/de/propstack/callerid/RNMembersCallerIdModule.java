@@ -1,12 +1,17 @@
 
 package de.propstack.callerid;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.Settings;
 import android.util.Log;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -18,6 +23,10 @@ import com.utils.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.security.Permission;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RNMembersCallerIdModule extends ReactContextBaseJavaModule {
 
@@ -59,6 +68,19 @@ public class RNMembersCallerIdModule extends ReactContextBaseJavaModule {
     private boolean isSystemAlertPermissionGranted(Context context) {
         return Settings.canDrawOverlays(context);
     }
+    
+    private List<String> getMissingTelephonyManagerPermissions() {
+      List<String> listPermissionsNeeded = new ArrayList<>();
+      int readCallLogPermission = ContextCompat.checkSelfPermission(reactContext, Manifest.permission.READ_CALL_LOG);
+      if(readCallLogPermission != PackageManager.PERMISSION_GRANTED){
+        listPermissionsNeeded.add(Manifest.permission.READ_CALL_LOG);
+      }
+      int readPhoneStatePermission = ContextCompat.checkSelfPermission(reactContext, Manifest.permission.READ_PHONE_STATE);
+      if(readPhoneStatePermission != PackageManager.PERMISSION_GRANTED){
+        listPermissionsNeeded.add(Manifest.permission.READ_PHONE_STATE);
+      }
+      return listPermissionsNeeded;
+    }
 
     @ReactMethod
     public void requestOverlayPermission() {
@@ -67,11 +89,15 @@ public class RNMembersCallerIdModule extends ReactContextBaseJavaModule {
             final Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + packageName));
             getReactApplicationContext().startActivityForResult(intent, 1000, null);
         }
+        else {
+          ActivityCompat.requestPermissions(reactContext.getCurrentActivity(), getMissingTelephonyManagerPermissions().toArray(new String[0]), 0);
+        }
     }
 
     @ReactMethod
     public void getExtensionEnabledStatus(final Promise promise) {
-        promise.resolve(isSystemAlertPermissionGranted(getReactApplicationContext()));
+        Boolean isSystemAlertPermissionGranted = isSystemAlertPermissionGranted(getReactApplicationContext());
+        promise.resolve(isSystemAlertPermissionGranted && getMissingTelephonyManagerPermissions().size() == 0);
     }
 
 }

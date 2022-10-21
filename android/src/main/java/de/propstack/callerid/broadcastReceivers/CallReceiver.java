@@ -36,30 +36,31 @@ public class CallReceiver extends BroadcastReceiver {
         String stateStr = intent.getExtras().getString(TelephonyManager.EXTRA_STATE);
         Log.d("CALLER_ID", stateStr);
         Log.d("CALLER_ID", "Is Showing overlay =>"+isShowingOverlay);
-        String number = intent.getExtras().getString(TelephonyManager.EXTRA_INCOMING_NUMBER); 
-        if (stateStr.equals(TelephonyManager.EXTRA_STATE_IDLE) || stateStr.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
+        if(intent.getExtras().keySet().contains(TelephonyManager.EXTRA_INCOMING_NUMBER)) {
+          String number = intent.getExtras().getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
+          if (stateStr.equals(TelephonyManager.EXTRA_STATE_IDLE) || stateStr.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
             if (isShowingOverlay) {
-                isShowingOverlay = false;
-                dismissCallerInfo(context);
+              isShowingOverlay = false;
+              dismissCallerInfo(context);
             }
-        } else if(stateStr.equals(TelephonyManager.EXTRA_STATE_RINGING)){
+          } else if (stateStr.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
             if (number != null && !number.isEmpty() && !number.equals("null")) {
-                isShowingOverlay = true; 
-                Log.d("CALLER_ID", "NUMBER =>"+number);
-                String callerInfo = getCallerInfo(context, number);
-                StringTokenizer tokenizedCallerInfo = new StringTokenizer(callerInfo, "|");
-                String callerName = tokenizedCallerInfo.nextToken();
-                String callerPosition = tokenizedCallerInfo.nextToken(); 
-                if (callerName != null && callerPosition != null) {
-                    showCallerInfo(context, callerName, callerPosition);
-                }
-                return; 
+              isShowingOverlay = true;
+              Log.d("CALLER_ID", "NUMBER =>" + number);
+              String callerInfo = getCallerInfo(context, number);
+              StringTokenizer tokenizedCallerInfo = new StringTokenizer(callerInfo, "|");
+              String callerName = tokenizedCallerInfo.nextToken();
+              if (callerName != null) {
+                showCallerInfo(context, callerName);
+              }
+              return;
             }
+          }
         }
     }
 
-    private void showCallerInfo(final Context context, final String callerName, final String callerPosition ) {
-        Log.d("CALLER_ID", "Show Caller info of: " + callerName + callerPosition);
+    private void showCallerInfo(final Context context, final String callerName ) {
+        Log.d("CALLER_ID", "Show Caller info of: " + callerName);
         new Handler().postDelayed(new Runnable() {
 
             @Override
@@ -80,10 +81,6 @@ public class CallReceiver extends BroadcastReceiver {
                     // Set caller name
                     TextView tvCallerName = overlay.findViewById(R.id.callerName);
                     tvCallerName.setText(callerName);
-
-                    // Set caller position
-                    TextView tvCallerPosition = overlay.findViewById(R.id.callerPosition);
-                    tvCallerPosition.setText(callerPosition);
                 }
 
                 int typeParam = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY : WindowManager.LayoutParams.TYPE_PHONE;
