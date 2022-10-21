@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -69,7 +70,7 @@ public class RNMembersCallerIdModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public Boolean getExtensionEnabledStatus(final Promise promise) {
+    public void getExtensionEnabledStatus(final Promise promise) {
         promise.resolve(isSystemAlertPermissionGranted(getReactApplicationContext()));
     }
 
