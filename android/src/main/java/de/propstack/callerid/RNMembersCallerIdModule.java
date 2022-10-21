@@ -16,6 +16,9 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.utils.Constants;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class RNMembersCallerIdModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
@@ -31,23 +34,20 @@ public class RNMembersCallerIdModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setCallerList(ReadableArray callerList) {
+    public void setCallerList(String callerListJson) {
         try {
             SharedPreferences sharedPreferences = getReactApplicationContext().getSharedPreferences(Constants.CALLER_PREF_KEY, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
-            for (int i = 0; i < callerList.size(); i++) {
-                ReadableMap caller = callerList.getMap(i);
+
+            JSONArray callerList = new JSONArray(callerListJson);
+            
+            for (int i = 0; i < callerList.length(); i++) {
+                JSONObject caller = callerList.getJSONObject(i);
                 Log.d("CALLER_ID", "Caller: " + String.valueOf(caller));
-                if (caller.hasKey("name") && caller.hasKey("numbers")) {
-                    String callerName = caller.getString("name");
-                    String callerPosition = caller.getString("position");
-                    ReadableArray callerNumbers = caller.getArray("numbers");
-                    for (int j = 0; j < callerNumbers.size(); j++) {
-                        String phoneNumber = callerNumbers.getString(j);
-                        editor.putString("+" + phoneNumber, callerName+"|"+callerPosition);
-                    }
-                }
+                String callerName = caller.getString("name");
+                String callerNumber = caller.getString("number");
+                editor.putString("+" + callerNumber, callerName);
             }
             editor.apply();
         } catch (Exception e) {
