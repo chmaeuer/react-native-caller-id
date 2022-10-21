@@ -12,11 +12,13 @@ export const setCallerList = (callerList) => {
   }
 };
 
-//Android only
-export const requestOverlayPermission = async () => {
+export const openSettings = async () => {
   try {
+    if (Platform.OS === 'ios') {
+        return await CallerId.openSettings();
+    }
     if (Platform.OS === 'android') {
-        return await CallerId.requestOverlayPermission();
+      return await CallerId.requestOverlayPermission();
     }
     return
   } catch (error) {
@@ -27,20 +29,7 @@ export const requestOverlayPermission = async () => {
 //iOS only
 export const getExtensionEnabledStatus = async () => {
   try {
-    if (Platform.OS === 'ios') {
-        return await CallerId.getExtensionEnabledStatus();
-    }
-    return
-  } catch (error) {
-    throw error;
-  }
-};
-export const openSettings = async () => {
-  try {
-    if (Platform.OS === 'ios') {
-        return await CallerId.openSettings();
-    }
-    return
+    return await CallerId.getExtensionEnabledStatus();
   } catch (error) {
     throw error;
   }

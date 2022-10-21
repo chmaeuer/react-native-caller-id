@@ -68,4 +68,9 @@ public class RNMembersCallerIdModule extends ReactContextBaseJavaModule {
         }
     }
 
+    @ReactMethod
+    public Boolean getExtensionEnabledStatus(final Promise promise) {
+        promise.resolve(isSystemAlertPermissionGranted(getReactApplicationContext()));
+    }
+
 }
