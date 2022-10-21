@@ -11,42 +11,34 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        android:background="@drawable/blue_rounded"
+        android:background="@drawable/background_rounded"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="44dp">
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/samolet_icon"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:background="@android:color/transparent"
-                android:drawableStart="@drawable/ic_samolet_logo"
-                android:padding="10dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:text="@string/default_modal_name"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                android:id="@+id/titleModal"/>
+        <TextView
+          android:id="@+id/titleModal"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_weight="1"
+          android:layout_marginLeft="40dp"
+          android:gravity="center"
+          android:text="@string/default_modal_name"
+          android:textColor="@android:color/white"
+          android:textSize="16sp" />
 
 
-
-            <Button
-                android:id="@+id/close_btn"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:background="@android:color/transparent"
-                android:drawableStart="@drawable/ic_close_white"
-                android:padding="10dp" />
-        </LinearLayout>
+        <Button
+          android:id="@+id/close_btn"
+          android:layout_width="40dp"
+          android:layout_height="34dp"
+          android:background="@android:color/transparent"
+          android:drawableStart="@drawable/ic_close_white"
+          android:padding="10dp" />
+      </LinearLayout>
 
         <TextView
             android:id="@+id/callerName"
@@ -56,24 +48,11 @@
             android:gravity="center"
             android:paddingLeft="16dp"
             android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:paddingRight="16dp"
             android:text="@string/default_caller_name"
             android:textColor="@android:color/white"
             android:textSize="28sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="24dp"
-            android:text="@string/default_caller_position"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:id="@+id/callerPosition"/>
     </LinearLayout>
 
 </LinearLayout>

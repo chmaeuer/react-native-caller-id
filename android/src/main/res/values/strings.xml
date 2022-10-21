@@ -1,5 +1,4 @@
 <resources>
-    <string name="default_modal_name">Входящий звонок</string>
-    <string name="default_caller_name">Unknown caller</string>
-    <string name="default_caller_position">Unknown position</string>
+    <string name="default_modal_name">Propstack Anrufer-ID</string>
+    <string name="default_caller_name">Unbekannter Anrufer</string>
 </resources>

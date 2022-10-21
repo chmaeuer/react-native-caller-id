@@ -43,24 +43,27 @@ public class RNMembersCallerIdModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setCallerList(String callerListJson) {
+    public void setCallerList(String callerListJson, final Promise promise) {
         try {
-            SharedPreferences sharedPreferences = getReactApplicationContext().getSharedPreferences(Constants.CALLER_PREF_KEY, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.clear();
+          SharedPreferences sharedPreferences = getReactApplicationContext().getSharedPreferences(Constants.CALLER_PREF_KEY, Context.MODE_PRIVATE);
+          SharedPreferences.Editor editor = sharedPreferences.edit();
+          editor.clear();
 
-            JSONArray callerList = new JSONArray(callerListJson);
-            
-            for (int i = 0; i < callerList.length(); i++) {
-                JSONObject caller = callerList.getJSONObject(i);
-                Log.d("CALLER_ID", "Caller: " + String.valueOf(caller));
-                String callerName = caller.getString("name");
-                String callerNumber = caller.getString("number");
-                editor.putString("+" + callerNumber, callerName);
-            }
-            editor.apply();
+          JSONArray callerList = new JSONArray(callerListJson);
+          
+          for (int i = 0; i < callerList.length(); i++) {
+              JSONObject caller = callerList.getJSONObject(i);
+              Log.d("CALLER_ID", "Caller: " + String.valueOf(caller));
+              String callerName = caller.getString("name");
+              String callerNumber = caller.getString("number").replaceAll("-", "").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll(" ", "");
+              Log.d("CALLER_ID", "sanitized: " + callerNumber);
+              editor.putString(callerNumber, callerName);
+          }
+          editor.apply();
+          promise.resolve(true);
         } catch (Exception e) {
             Log.e("CALLER_ID", e.getLocalizedMessage());
+            promise.reject(e.getMessage());
         }
 
     }
