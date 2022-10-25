@@ -1,5 +1,7 @@
 package de.propstack.callerid.broadcastReceivers;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +28,11 @@ import java.util.List;
 
 import static android.content.Context.WINDOW_SERVICE;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
 public class CallReceiver extends BroadcastReceiver {
   private static boolean isShowingOverlay = false;
   private static LinearLayout overlay;
@@ -50,10 +57,30 @@ public class CallReceiver extends BroadcastReceiver {
           String callerName = getCallerInfo(context, number);
           if (callerName != null) {
             showCallerInfo(context, callerName);
+            this.createNotificationChannel(context);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "CALLER_ID")
+              .setSmallIcon(R.drawable.ic_samolet_logo)
+              .setContentTitle("Propstack Anrufer-ID")
+              .setContentText(callerName)
+              .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+            notificationManager.notify((int) Math.random(), builder.build());
           }
           return;
         }
       }
+    }
+  }
+
+  private void createNotificationChannel(final Context context) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      CharSequence name = "CALLER_ID";
+      String description = "Incoming call notifications";
+      int importance = NotificationManager.IMPORTANCE_HIGH;
+      NotificationChannel channel = new NotificationChannel("CALLER_ID", name, importance);
+      channel.setDescription(description);
+      NotificationManager notificationManager = getSystemService(context, NotificationManager.class);
+      notificationManager.createNotificationChannel(channel);
     }
   }
 
