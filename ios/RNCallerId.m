@@ -51,7 +51,7 @@ RCT_EXPORT_METHOD(getExtensionEnabledStatus: (RCTPromiseResolveBlock)resolve rej
     
     [[CXCallDirectoryManager sharedInstance] getEnabledStatusForExtensionWithIdentifier:EXTENSION_ID completionHandler:^(CXCallDirectoryEnabledStatus enabledStatus, NSError * _Nullable error) {
             if (enabledStatus == 0) {
-                reject(@"getExtensionEnabledStatus", @"CALLER_ID Failed to get extension status", error);
+                reject(@"getExtensionEnabledStatus", [NSString stringWithFormat:@"CALLER_ID Failed to get extension status: %@", error.description], error);
                 // Code 0 tells you that there's an error. Common is that the identifierString is wrong.
             } else if (enabledStatus == 1) {
                 resolve(@false);
